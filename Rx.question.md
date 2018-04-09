@@ -110,6 +110,10 @@ PublishSubject
     Observable只接收PublishSubject被订阅之后的所有数据。
     
 
+# 不调用subscribOn 或 observerOn，则各种map & callback 会运行在当前线程吗？
+
+没有subscribeOn()及observeOn，则在哪个线程调用就在哪个线程沧海消耗执行
+
 # Subject考虑到多线程还需要toSerialized()??
 [When you use a Subject as a Subscriber, take care not to call its onNext( ) method (or its other on methods) from multiple threads, as this could lead to non-serialized calls, which violates the Observable contract and creates an ambiguity in the resulting Subject.](https://github.com/ReactiveX/RxJava/wiki/Subject)
 
@@ -125,6 +129,24 @@ Hot Observable 无论有没有 Subscriber 订阅，事件始终都会发生。�
 
 然而，Cold Observable 只有 Subscriber 订阅时，才开始执行发射数据流的代码。并且 Cold Observable 和 Subscriber 只能是一对一的关系，当有多个不同的订阅者时，消息是重新完整发送的。也就是说对 Cold Observable 而言，有多个Subscriber的时候，他们各自的事件是独立的。
 
+
+# Error Handling : 错误/异常处理
+onErrorReturn(throwable -> ClassOfReturn): 
+ 拦截捕获发生的异常，并返回一个正常的数据回调给观察者的onNext()。然后onComplete()
+ 
+onErrorResumeNext( ObservableSource )
+ 当发生错误的时候，在该方法内捕获异常，并返回一个新的ObservableSource继续发射数据。观察者的onNext()继续收到回调。然后onComplete()
+ 第一处onErrorResumeNext()抛的异常，会在下一处的onErrorResumeNext()再一次处理，否则下文的onErrorResumeNext()不会得到执行的机会
+
+onErrorReturnItem( ClassOfReturn )
+ 当发生错误的时候，不处理异常，直接返回一个正常的数据发射给观察者的onNext()。然后onComplete()
+
+doOnError( )
+ 当之前的代码发生异常时，会被回调。
+ 如果之前的异常被onErrorResumeNext() onErrorResturnItem() onErrorReturn() catch并处理过了，则不会被回调。
+
+
+# doOnNext() 是不是在onNext()之前回调？
 
 
 

@@ -186,14 +186,24 @@ class SchdulersActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    fun testNoSchedulers() {
+        Thread( {
+            // 没有subscribeOn()及observeOn，则在哪个线程调用就在哪个线程沧海消耗执行
+            Observable.just("no schedulers")
+                    .map { "$it map result".log() }
+                    .subscribe { "$it , subscribe result".log() }
+        }, "testNoSchedulers").start()
+    }
+
     override fun onClick(v: View) {
         when(v.id) {
             R.id.btnTest -> {
+                testNoSchedulers()
 //                testSchedulers()
 //                testScheculersCall()
 //                testScheculersChange()
 //                testSchedulerBySubscribeOn()
-                testDelayAndLoop()
+//                testDelayAndLoop()
             }
         }
     }

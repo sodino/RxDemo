@@ -3,59 +3,136 @@ package sodino.rx.demo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import io.reactivex.disposables.Disposable
-import io.reactivex.subjects.ReplaySubject
-import kotlinx.android.synthetic.main.activity_subject.*
+import io.reactivex.Observable
+import io.reactivex.ObservableSource
+import io.reactivex.functions.Function
+import kotlinx.android.synthetic.main.activity_rx_errors.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     var idx = 0L
-    lateinit var disposable : Disposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_subject_async)
+        setContentView(R.layout.activity_rx_errors)
 
-        btnRegiste.setOnClickListener(this)
-        btnFireEvent.setOnClickListener(this)
-        btnUnregiste.setOnClickListener(this)
+        btnError.setOnClickListener(this)
     }
 
 
     override fun onClick(v: View) {
         when(v.id) {
-            R.id.btnRegiste -> {
-                register()
-            }
-            R.id.btnFireEvent -> {
-                val id = idx ++
-                "fire event $id".log()
-                AsyncBus.post(TestEvent(id))
-//                ReplayStringBus.post("fireEvent ${idx ++}")
-            }
-            R.id.btnUnregiste -> {
-                // onComplete()触发AsyncSubject发射最后的数据
-                AsyncBus.onComplete()
-                // Disposed之后，不会再收到新消息通知
-                if (!disposable.isDisposed) {
-                    disposable.dispose()
-                }
+            R.id.btnError -> {
+                testOnError()
+//                testOnErrorReturn()
+//                testOnErrorResumeNext()
+//                testOnErrorReturnItem()
             }
         }
     }
 
-    private fun register() {
-        "register new subscriber".log()
-
-        disposable = AsyncBus.toObservable(TestEvent::class.java)
-                .subscribe { "callback ${it.id}".log() }
+    private fun testOnError() {
+        Observable.just("")
+                .map { val i = 0
+                    if (i == 0) {
+                        throw Exception("testOnErrorReturnItem")
+                    }
+                    "test map"
+                }
+                .subscribe({
+                    // onNext
+                    "subscribe onNext: $it".log()
+                }, {
+                    // onError
+                    "subscribe onError ${it::class.java.simpleName} ${it.message}".log()
+                }, {
+                    // onComplete
+                    "subscribe onComplete".log()
+                })
     }
 
+    private fun testOnErrorReturnItem() {
+        Observable.just("")
+                .map { val i = 0
+                    if (i == 0) {
+                        throw Exception("testOnErrorReturnItem")
+                    }
+                    "test map"
+                }
+                // doOnError 1 会被执行
+                .doOnError { throwable -> "doOnError 1 ${throwable::class.java.simpleName} ${throwable.message}".log() }
+                .onErrorReturnItem("onErrorReturnItem")
+                // doOnError 2 不会被执行
+                .doOnError { throwable -> "doOnError 2 ${throwable::class.java.simpleName} ${throwable.message}".log() }
+                .subscribe({
+                    // onNext
+                    "subscribe onNext: $it".log()
+                }, {
+                    // onError
+                    "subscribe onError".log()
+                }, {
+                    // onComplete
+                    "subscribe onComplete".log()
+                })
 
+    }
+
+    private fun testOnErrorResumeNext() {
+        Observable.just("testOnErrorResumeNextNext")
+                .map {
+                    val i = 0
+                    if (i == 0) {
+                        throw Exception("testOnErrorResumeNext")
+                    }
+                    "test map"
+                }
+                .onErrorResumeNext (Function { throwable ->
+                        val i = 0;
+                        if (i == 0) {
+                            val tmp = "Function onErrorResumeNext exception"
+                            tmp.log()
+                            // 第一处onErrorResumeNext()抛的异常，会在下一处的onErrorResumeNext()再一次处理，否则下文的onErrorResumeNext()不会得到执行的机会
+                            throw Exception(tmp)
+                        }
+                        Observable.just("observable from onErrorResumeNext (function) : ${throwable.message}")
+                    }
+                )
+                .onErrorResumeNext (Observable.just("observable from onErrorResumeNext"))
+                .subscribe({
+                    // onNext
+                    "subscribe onNext: $it".log()
+                }, {
+                    // onError
+                    "subscribe onError".log()
+                }, {
+                    // onComplete
+                    "subscribe onComplete".log()
+                })
+    }
+
+    private fun testOnErrorReturn() {
+        Observable.just("testOnErrorReturn")
+                .map { val i = 0
+                    if (i == 0) throw Exception("testOnErrorReturn")
+                    "map result"
+                }
+                .onErrorReturn({
+                    val tmp = "catch ${it::class.java.simpleName} ${it.message}"
+                    tmp.log()
+                    tmp
+                })
+                .subscribe({
+                    // onNext
+                    "subscribe onNext: $it".log()
+                }, {
+                    // onError
+                    "subscribe onError".log()
+                }, {
+                    // onComplete
+                    "subscribe onComplete".log()
+                })
+    }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (!disposable.isDisposed) {
-            disposable.dispose()
-        }
     }
 }
