@@ -21,7 +21,7 @@ import okhttp3.Request
 import org.json.JSONObject
 import sodino.rx.demo.bing.BingImg
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class BingWallpaperImagesActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var bindAdapter : BingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {

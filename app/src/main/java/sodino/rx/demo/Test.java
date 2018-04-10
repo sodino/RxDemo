@@ -1,9 +1,13 @@
 package sodino.rx.demo;
 
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -120,6 +124,51 @@ public class Test {
                         return Observable.just("observable from onErrorResumeNext: " + throwable.getMessage());
                     }
                 })
-                .subscribe();
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    class BingAdapter extends RecyclerView.Adapter<BingAdapter.BingHolder> {
+
+        @Override
+        public BingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return null;
+        }
+
+        @Override
+        public void onBindViewHolder(BingHolder holder, int position) {
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return 0;
+        }
+
+        class BingHolder extends RecyclerView.ViewHolder{
+
+            public BingHolder(View itemView) {
+                super(itemView);
+            }
+        }
     }
 }

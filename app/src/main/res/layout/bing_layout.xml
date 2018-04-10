@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/corner"
+    android:layout_width="match_parent"
+    android:layout_height="250dp">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imgView"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtView"
+        android:textSize="18sp"
+        android:background="#99ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="java.lang.NoSuchMethodError: No static method getFont"
+        />
+</android.support.constraint.ConstraintLayout>
