@@ -1,4 +1,4 @@
-package sodino.rx.demo
+package sodino.rx.demo.subject
 
 import io.reactivex.Observable
 import io.reactivex.internal.functions.Functions

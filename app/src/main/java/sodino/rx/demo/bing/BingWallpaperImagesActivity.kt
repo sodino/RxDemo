@@ -1,4 +1,4 @@
-package sodino.rx.demo
+package sodino.rx.demo.bing
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -19,8 +19,12 @@ import kotlinx.android.synthetic.main.activity_bing_imgs.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
-import sodino.rx.demo.bing.BingImg
+import sodino.rx.demo.R
+import sodino.rx.demo.log
 
+/**
+ * 拉取bing.com的背景壁纸图片，并显示出来
+ * */
 class BingWallpaperImagesActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var bindAdapter : BingAdapter
 

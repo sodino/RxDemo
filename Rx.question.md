@@ -150,4 +150,33 @@ doOnError( )
 
 
 
+# 可以全局配置 rx 的未接收异常的处理
+
+        RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
+              @Override
+              public void accept(Throwable throwable) throws Exception {
+                  LOG.warn(throwable);
+              }
+          });
+
+
+
+          return Observable.create(new ObservableOnSubscribe<VM>() {
+              @Override
+              public void subscribe(ObservableEmitter<VM> emitter) {
+                  try {
+                      // TODO : load tx from cache
+                      emitter.onNext(mPresenter.getVM());
+                  } catch (Exception e) {
+                      emitter.onError(e);
+                  } finally {
+                      emitter.onComplete();
+                  }
+              }
+          })
+  
+    Disposable.clear 时候强制中断线程，引发 异常；
+    而 emitter 在发送异常时候，又因为已经取消订阅，没有异常接收者，因此就直接抛出异常。
+
+
 技术 流量 产品 业务

@@ -1,10 +1,8 @@
-package sodino.rx.demo
+package sodino.rx.demo.rxbus
 
 import io.reactivex.Observable
 import io.reactivex.internal.functions.Functions
-import io.reactivex.internal.functions.ObjectHelper
 import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
 
 /**
  * Created by sodino on 2018/4/2.

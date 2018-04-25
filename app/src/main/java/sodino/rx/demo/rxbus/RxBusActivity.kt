@@ -1,11 +1,13 @@
-package sodino.rx.demo
+package sodino.rx.demo.rxbus
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
+import sodino.rx.demo.R
+import sodino.rx.demo.TestEvent
+import sodino.rx.demo.log
 
 class RxBusActivity : AppCompatActivity(), View.OnClickListener {
 

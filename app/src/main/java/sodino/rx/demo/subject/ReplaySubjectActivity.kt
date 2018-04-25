@@ -1,4 +1,4 @@
-package sodino.rx.demo
+package sodino.rx.demo.subject
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,6 +6,9 @@ import android.view.View
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.ReplaySubject
 import kotlinx.android.synthetic.main.activity_subject.*
+import sodino.rx.demo.R
+import sodino.rx.demo.TestEvent
+import sodino.rx.demo.log
 
 class ReplaySubjectActivity : AppCompatActivity(), View.OnClickListener {
     var idx = 0L
@@ -39,7 +42,7 @@ class ReplaySubjectActivity : AppCompatActivity(), View.OnClickListener {
                 register()
             }
             R.id.btnFireEvent -> {
-                BehaviorBus.post(TestEvent(idx ++))
+                BehaviorBus.post(TestEvent(idx++))
             }
             R.id.btnUnregiste -> {
                 // Disposed之后，不会再收到新消息通知

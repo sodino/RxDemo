@@ -1,4 +1,4 @@
-package sodino.rx.demo
+package sodino.rx.demo.error
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,6 +6,8 @@ import android.view.View
 import io.reactivex.Observable
 import io.reactivex.functions.Function
 import kotlinx.android.synthetic.main.activity_rx_errors.*
+import sodino.rx.demo.R
+import sodino.rx.demo.log
 
 class ErrorHandleActivity : AppCompatActivity(), View.OnClickListener {
     var idx = 0L

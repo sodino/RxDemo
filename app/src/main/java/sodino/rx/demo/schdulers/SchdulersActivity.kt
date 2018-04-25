@@ -1,4 +1,4 @@
-package sodino.rx.demo
+package sodino.rx.demo.schdulers
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -9,6 +9,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import sodino.rx.demo.R
+import sodino.rx.demo.Task
+import sodino.rx.demo.log
 import java.util.concurrent.TimeUnit
 
 class SchdulersActivity : AppCompatActivity(), View.OnClickListener {
@@ -23,13 +26,13 @@ class SchdulersActivity : AppCompatActivity(), View.OnClickListener {
     private fun testDelayAndLoop() {
         var idx = 0
         // delay
-        Schedulers.computation().createWorker().schedule ({ Task.boolean_2s(idx ++) }, 1000, TimeUnit.MICROSECONDS)
+        Schedulers.computation().createWorker().schedule ({ Task.boolean_2s(idx++) }, 1000, TimeUnit.MICROSECONDS)
 
         // loop
         var disposable : Disposable? = null
 
         disposable = Schedulers.io().createWorker().schedulePeriodically( {
-            Task.boolean_2s(idx ++)
+            Task.boolean_2s(idx++)
             if (idx > 10) {
                 disposable?.let { it.dispose()
                 "do dispose".log()
@@ -133,20 +136,20 @@ class SchdulersActivity : AppCompatActivity(), View.OnClickListener {
         var idx = 0
         // Schedulers.newThread() 每次新创建线程
         Schedulers.newThread().createWorker().schedule {
-            Task.boolean_2s(idx ++)
+            Task.boolean_2s(idx++)
         }
         Schedulers.newThread().createWorker().schedule {
-            Task.boolean_2s(idx ++)
+            Task.boolean_2s(idx++)
         }
 
         // 自行管理线程池
         Schedulers.computation().createWorker().schedule {
-            Task.boolean_2s(idx ++)
+            Task.boolean_2s(idx++)
         }
 
         // 自行管理线程池
         Schedulers.io().createWorker().schedule {
-            Task.boolean_2s(idx ++)
+            Task.boolean_2s(idx++)
         }
 
         // 在当前线程调用并执行，和Schedulers.single()类似的，在同一线程执行的话也是强顺序的
@@ -174,15 +177,15 @@ class SchdulersActivity : AppCompatActivity(), View.OnClickListener {
         // 返回单纯程支持的调度程序实例，用于需要在同一后台线程上进行按固定顺序执行的场景
         // 以下三个调用会按顺序在同一线程执行
         Schedulers.single().createWorker().schedule {
-            Task.boolean_2s(idx ++)
+            Task.boolean_2s(idx++)
         }
 
         Schedulers.single().createWorker().schedule {
-            Task.boolean_2s(idx ++)
+            Task.boolean_2s(idx++)
         }
 
         Schedulers.single().createWorker().schedule {
-            Task.boolean_2s(idx ++)
+            Task.boolean_2s(idx++)
         }
     }
 
