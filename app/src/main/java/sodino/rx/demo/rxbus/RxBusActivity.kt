@@ -6,7 +6,7 @@ import android.view.View
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 import sodino.rx.demo.R
-import sodino.rx.demo.TestEvent
+import sodino.rx.demo.TestEvent1
 import sodino.rx.demo.log
 
 class RxBusActivity : AppCompatActivity(), View.OnClickListener {
@@ -19,12 +19,12 @@ class RxBusActivity : AppCompatActivity(), View.OnClickListener {
 
         btnTest.setOnClickListener(this)
 
-        disposable = RxBus.toObservable(TestEvent::class.java)
+        disposable = RxBus.toObservable(TestEvent1::class.java)
                 .subscribe { onNext ->
                     "onCreate() ${onNext.id}".log()
                 }
 
-        RxBus.toObservable(TestEvent::class.java)
+        RxBus.toObservable(TestEvent1::class.java)
                 .subscribe { "onCreate()2 ${it.id}".log() }
     }
 
@@ -42,7 +42,7 @@ class RxBusActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun testObservable() {
-        RxBus.post(TestEvent(101))
+        RxBus.post(TestEvent1(101))
     }
 
     override fun onDestroy() {

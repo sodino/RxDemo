@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_subject.*
+import kotlinx.android.synthetic.main.activity_subject_async.*
 import sodino.rx.demo.R
-import sodino.rx.demo.TestEvent
+import sodino.rx.demo.TestEvent1
 import sodino.rx.demo.log
 
 class AsyncSubjectActivity : AppCompatActivity(), View.OnClickListener {
@@ -31,7 +31,7 @@ class AsyncSubjectActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnFireEvent -> {
                 val id = idx ++
                 "fire event $id".log()
-                AsyncBus.post(TestEvent(id))
+                AsyncBus.post(TestEvent1(id))
 //                ReplayStringBus.post("fireEvent ${idx ++}")
             }
             R.id.btnUnregiste -> {
@@ -48,7 +48,7 @@ class AsyncSubjectActivity : AppCompatActivity(), View.OnClickListener {
     private fun register() {
         "register new subscriber".log()
 
-        disposable = AsyncBus.toObservable(TestEvent::class.java)
+        disposable = AsyncBus.toObservable(TestEvent1::class.java)
                 .subscribe { "callback ${it.id}".log() }
     }
 

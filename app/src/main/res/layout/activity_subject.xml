@@ -21,15 +21,22 @@
         app:layout_constraintTop_toBottomOf="@id/txtHello"/>
     <Button android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnFireEvent"
-        android:text="fireEvent"
+        android:id="@+id/btnFireEvent1"
+        android:text="fireEvent(TestEvent1)"
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@id/btnRegiste"/>
+    <Button android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnFireEvent2"
+        android:text="fireEvent(TestEvent2)"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/btnRegiste"
+        app:layout_constraintStart_toEndOf="@id/btnFireEvent1"/>
     <Button android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnUnregiste"
         android:text="unRegiste"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@id/btnFireEvent"/>
+        app:layout_constraintTop_toBottomOf="@id/btnFireEvent2"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'hubble'
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -41,5 +43,7 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+
+    implementation 'com.meitu.library:hubble:2.0.14'
 
 }

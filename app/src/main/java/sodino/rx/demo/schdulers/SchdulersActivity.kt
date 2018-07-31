@@ -10,6 +10,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import sodino.rx.demo.R
+import sodino.rx.demo.R.id.btnTest
 import sodino.rx.demo.Task
 import sodino.rx.demo.log
 import java.util.concurrent.TimeUnit
